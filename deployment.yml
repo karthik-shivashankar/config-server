@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: config-server
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: config-server
+            tier: backend
+    template:
+        metadata:
+            labels:
+                app: config-server
+                tier: backend
+        spec:
+            containers:
+            - name: config-server
+              image: karthik3225/config-server
+              imagePullPolicy: IfNotPresent
+              resources:
+                requests:
+                    cpu: 100m
+                    memory: 100Mi
+              env:
+              - name: GET_HOSTS_FROM
+                value: dns
+              ports:
+              - containerPort: 8888
